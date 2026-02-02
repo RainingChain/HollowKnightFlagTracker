@@ -12,7 +12,11 @@ using GlobalEnums;
 // "D:\SteamLibrary\steamapps\common\Hollow Knight\BepInEx\LogOutput.log"
 
 /*
- *  Press F2 to print differences
+ * How to use:
+ *  - Run node C:\Users\Samuel\source\repos\HollowKnightFlagTracker\watcher.js
+ *  - Start HK game. 
+ *  - Pause the game to print $REPO/saveData.json
+ *  - Save file differences are printed in $REPO/flag_output.json
  * */
 
 [BepInPlugin("com.rainingchain.hollowknightflagtracker", "Hollow Knight Flag Tracker Mod", "1.0.0")]

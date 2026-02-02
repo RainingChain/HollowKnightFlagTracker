@@ -1,4 +1,4 @@
-playerData.playTime---
+playerData.playTime
 playerData.FisherWalkerIdleTimeLeft
 playerData.ShellShards
 playerData.silk
@@ -43,3 +43,5 @@ playerData.currentInvPane
 playerData.heartPieces
 playerData.ToolPaneHasNew
 playerData.InvPaneHasNew
+playerData.previousDarkness
+playerData.MPCharge

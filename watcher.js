@@ -9,12 +9,13 @@ const readJson = () => {
         return fs.readFileSync(SAVE_DATA_OUTPUT,'utf8').trim();
     } catch(err){
         return null;
-    }   
-};  
+    }
+};
 
 
 const GetIgnoredProps = () => {
-    var lines = fs.readFileSync("C:\\Users\\Samuel\\source\\repos\\HollowKnightFlagTracker\\ignore_json_changed_properties.txt", 'utf8').split('\n');
+    var lines = fs.readFileSync("C:\\Users\\Samuel\\source\\repos\\HollowKnightFlagTracker\\ignore_json_changed_properties.txt", 'utf8').split('\n').map(a => a.trim());
+    //console.log(lines);
     return new Set(lines);
 };
 
@@ -27,8 +28,8 @@ const CompareSaveDatas = (oldJson, newJson) => {
     FindDeepDifferences(
         oldJson.playerData,
         newJson.playerData,
-        "playerData", 
-        GetIgnoredProps(), 
+        "playerData",
+        GetIgnoredProps(),
         list);
 
     return list;
@@ -81,7 +82,7 @@ const CompareSaveDatas_GeoInt = (oldJson, newJson, isGeo) => {
         var alreadyExists = geoRocksOld.some(itemOld => {
             return isDeepStrictEqual(itemOld, itemNew);
         });
-        
+
         if (!alreadyExists) {
             list.push((isGeo ? "@geo," : "@int,")
                 + itemNew["sceneName"] + ","
@@ -106,7 +107,7 @@ const CompareSaveDatas_Bool = (oldJson, newJson) => {
         var alreadyExists = geoRocksOld.some(itemOld => {
             return isDeepStrictEqual(itemOld, itemNew);
         });
-        
+
         if (!alreadyExists) {
             list.push("@bool,"
                 + itemNew["sceneName"] + ","
@@ -120,8 +121,8 @@ const CompareSaveDatas_Bool = (oldJson, newJson) => {
 
 const FindDeepDifferences = (oldValue, newValue, parentPath, ignoreProps, outList) => {
     if (oldValue === newValue)
-        return; 
-    
+        return;
+
     const add = (key, value) => {
         var parentKey = parentPath + "." + key;
         if (ignoreProps.has(parentKey))
@@ -132,7 +133,7 @@ const FindDeepDifferences = (oldValue, newValue, parentPath, ignoreProps, outLis
             value = "false";
         outList.push("@," + parentKey + "," + value);
     };
-    
+
     for (let key in oldValue){
         const oldToken = oldValue[key];
 
@@ -148,7 +149,7 @@ const FindDeepDifferences = (oldValue, newValue, parentPath, ignoreProps, outLis
                    return oldToken.every(o => !isDeepStrictEqual(t, o));
                 });
 
-                if (addedItems.length) 
+                if (addedItems.length)
                     add(key, JSON.stringify(addedItems));
             }
             else
@@ -192,7 +193,7 @@ const update = () => {
     const saveData = JSON.parse(saveDataStr);
 
     LastSaveDataStr = saveDataStr;
-    //console.log(LastSaveDataStr, LastSaveData);    
+    //console.log(LastSaveDataStr, LastSaveData);
     //console.log(saveDataStr, saveData);
 
     var logs = CompareSaveDatas(LastSaveData, saveData);
